@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 public class CompanyService {
     @Autowired
     DataBaseRepository dataBaseRepository;
+    @Autowired
+    EmployeeService employeeService;
 
     public Map<Long, CompanyEntity> findAll() {
         if (dataBaseRepository.getCompanyDataBase().size() == 0) {
@@ -67,6 +69,7 @@ public class CompanyService {
 
     public boolean delete(Long id) {
         dataBaseRepository.getCompanyDataBase().remove(id);
+        employeeService.deleteByCompanyId(id);
         return true;
     }
 }
